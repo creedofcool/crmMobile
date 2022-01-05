@@ -1,6 +1,7 @@
 import Customers from "../views/Customers.vue";
 import Me from "../views/Me.vue";
 import customerDetail from "../views/CustomerDetail.vue";
+import Add from "../views/Add.vue";
 import { createWebHistory, createRouter } from "vue-router";
 
 const routes = [
@@ -25,6 +26,12 @@ const routes = [
     name: "customerDetail",
     component: customerDetail,
     meta: { isBack: true },
+  },
+{
+    path: "/add",
+    name: "add",
+    component: Add,
+    meta: { isBack: false },
   },
 ];
 

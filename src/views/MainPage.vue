@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar
+  <!-- <van-nav-bar
     :title="route.name"
     @click-left="$router.go(-1)"
     @click-right="onClickRight"
@@ -7,12 +7,11 @@
     <template #left v-if="route.meta.isBack">
       <van-icon name="arrow-left" size="30" />
     </template>
-  </van-nav-bar>
+  </van-nav-bar> -->
   <router-view />
   <van-tabbar route v-model="activeTabbar" v-if="!route.meta.isBack">
-    <van-tabbar-item replace to="/customers" icon="friends-o" name="customers"
-      >customers</van-tabbar-item
-    >
+    <van-tabbar-item replace to="/customers" icon="friends" name="customers">customers</van-tabbar-item>
+    <!-- <van-tabbar-item replace to="/add" icon="add-o" name="customers" size="40"></van-tabbar-item> -->
     <van-tabbar-item replace to="/me" icon="setting-o">me</van-tabbar-item>
   </van-tabbar>
 </template>
