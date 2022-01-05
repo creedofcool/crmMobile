@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { CheckboxGroup, Toast } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import _ from "lodash";
+import { getRandomDate } from "../utils/index.js";
 
 defineProps({
   msg: String,
@@ -74,7 +75,17 @@ const centers = [
   "西安",
 ];
 const belongtoDepts = ["总部", "佛山", "psy事业部"];
+const leadsChannels = [
+  "美团",
+  "大众",
+  "百度",
+  "小微企业联盟",
+  "医生集团",
+  "地推",
+  "转介绍",
+];
 const belongtoWho = ["客服1", "佛山客服2", "总部客服3", "区域客服1"];
+const createdByWho = ["创建人1", "创建人2", "创建人3"];
 const leadsTypes = ["客户", "线索", "联系人"];
 const getValRandom = (arr, n = 1) => {
   const len = arr.length;
@@ -116,6 +127,9 @@ const dataList = [...Array(dataListLength).keys()].map((elem) => {
     belongtoDept: getValRandom(belongtoDepts),
     leadsType: getValRandom(leadsTypes),
     avatar: "https://img01.yzcdn.cn/vant/cat.jpeg",
+    leadsChannel: `${getValRandom(leadsChannels)}`,
+    createdAt: `${getRandomDate("yyyy-MM-DD")}`,
+    createdBy: `${getValRandom(createdByWho)}`,
   };
   return tmp;
 });
@@ -349,6 +363,17 @@ const onRightSelect = (action) => {
             >{{ item.leadsType }}</van-tag
           >
         </van-row>
+        <van-tag
+          color="#f1faee"
+          text-color="#457b9d"
+          icon="add-o"
+          style="margin-right: 2px"
+          >{{ item.createdBy }}@ {{ item.createdAt }}
+          <van-icon name="diamond-o" color="#1989fa" size="20" />{{
+            item.leadsChannel
+          }}</van-tag
+        >
+        <van-row> </van-row>
       </template>
       <template #extra>
         <van-row>

@@ -80,12 +80,13 @@
               @cancel="centerPicker = false"
             />
           </van-popup>
-          <van-field
+          <van-field label="所属池" v-model="dept" readonly />
+          <!-- <van-field
             v-model="dept"
             is-link
             readonly
             name="deptPicker"
-            label="所属部门"
+            label="所属池"
             placeholder="center"
             @click="deptPicker = true"
           />
@@ -95,8 +96,9 @@
               @confirm="onDeptConfirm"
               @cancel="deptPicker = false"
             />
-          </van-popup>
+          </van-popup> -->
           <van-field label="所属人" v-model="belongtoWho" readonly />
+          <van-field label="创建信息" v-model="channelInfo" readonly />
           <van-field
             v-model="noteMsg"
             rows="3"
@@ -196,7 +198,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import _ from "lodash";
-import moment from "moment";
+import { getRandomDate } from "../utils";
 
 const route = useRoute();
 const showPopover = ref(false);
@@ -215,6 +217,9 @@ const gender = ref(customerDetail.gender);
 const center = ref(customerDetail.serviceCenter);
 const dept = ref(customerDetail.belongtoDept);
 const belongtoWho = ref(customerDetail.belongtoWho);
+const channelInfo = ref(
+  `${customerDetail.createdBy}@${customerDetail.createdAt} <${customerDetail.leadsChannel}>`
+);
 
 const onSubmit = () => {};
 const addMore = ref(false);
@@ -228,19 +233,6 @@ const noteMsg = ref("");
 //   const month = _.random(1, 12);
 //   const date =
 // }
-
-const randomDate = (start, end, startHour, endHour) => {
-  var date = new Date(+start + Math.random() * (end - start));
-  var hour = (startHour + Math.random() * (endHour - startHour)) | 0;
-  date.setHours(hour);
-  return date;
-};
-
-const getRandomDate = () => {
-  return moment(randomDate(new Date(2020, 0, 1), new Date(), 8, 22)).format(
-    "yyyy-MM-DD HH:mm:ss"
-  );
-};
 
 // console.log();
 
