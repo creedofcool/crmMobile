@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 import { CheckboxGroup, Toast } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import _ from "lodash";
-import { getRandomDate } from "../utils/index.js";
+import { getRandomDate, firstContactMethods } from "../utils/index.js";
 
 defineProps({
   msg: String,
@@ -130,6 +130,7 @@ const dataList = [...Array(dataListLength).keys()].map((elem) => {
     leadsChannel: `${getValRandom(leadsChannels)}`,
     createdAt: `${getRandomDate("yyyy-MM-DD")}`,
     createdBy: `${getValRandom(createdByWho)}`,
+    firstContactMethod: `${getValRandom(firstContactMethods)}`,
   };
   return tmp;
 });
@@ -162,7 +163,7 @@ const onClickLeft = () => {
 
   editIcon.value = editEnable.value ? "close" : "records";
   if (!editEnable.value) {
-    groupChecked.value = {};
+    groupChecked.value = [];
   }
   console.log(groupChecked.value);
 };
@@ -218,6 +219,12 @@ const onRightSelect = (action) => {
       Toast(action.id);
   }
 };
+const createNewStepActive = ref(0);
+const gotoStep = () => {
+  createNewStepActive.value =
+    createNewStepActive.value < 4 ? createNewStepActive.value+1 : 0;
+  console.log(createNewStepActive.value);
+};
 </script>
 
 <template>
@@ -262,15 +269,6 @@ const onRightSelect = (action) => {
           >search</van-button
         >
       </template>
-      <!-- <template #left>
-        <van-icon
-          name="ellipsis" 
-          size="25"
-          color="#ffffff"
-          @click="showSearchMore"
-          style="margin: 15;"
-        />
-      </template> -->
     </van-search>
 
     <van-dropdown-menu>
@@ -298,11 +296,7 @@ const onRightSelect = (action) => {
         <van-button square type="info" size="small" text="add Note" />
       </van-row>
     </template>
-    <!-- <template #right>
-      <van-button square type="danger" text="Delete" />
-    </template> -->
     <van-cell center border>
-      <!-- <van-cell center> -->
       <template #title>
         <van-row type="flex">
           <van-col span="4" v-if="editEnable">
@@ -390,41 +384,54 @@ const onRightSelect = (action) => {
 
   <van-popup
     v-model:show="addNew"
+    round
     closeable
-    close-icon-position="top-left"
+    close-icon-position="top-right"
     position="bottom"
     :style="{ height: '90%' }"
-  />
-  <!-- <van-sticky :offset-bottom="50" position="bottom">
-  <div style="float:right;margin:10px">
-  <van-button type="primary" icon="plus" round ></van-button>
-</div>
-</van-sticky> -->
-  <!-- <van-cell center is-link size="large" value="Content" label="Description">
-    <template #title>
-<van-image
-  round
-  width="5rem"
-  height="5rem"
-  src="https://img01.yzcdn.cn/vant/cat.jpeg"
-/>
-      <h3 style="margin-top:-1px">Cell title</h3>
-    </template>
-  </van-cell>
-  <van-cell-group>
-    <van-cell title="URL" is-link url="https://github.com" />
-    <van-cell title="Vue Router" is-link to="index" />
-  </van-cell-group>
-  <van-card num="2" price="2.00" title="Title" desc="Description" />
-  <h1>{{ msg }}</h1>
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <van-tabbar v-model="active">
-    <van-tabbar-item name="customers" icon="friends-o" badge="5"
-      >customers</van-tabbar-item
-    >
-    <van-tabbar-item name="create" icon="add-o"></van-tabbar-item>
-    <van-tabbar-item name="me" icon="setting-o">me</van-tabbar-item>
-  </van-tabbar> -->
+  >
+    <div style="margin-top: 5rem">
+      <van-steps
+        :active="createNewStepActive"
+        active-icon="arrow"
+        active-color="#38f"
+      >
+        <van-step> <template #default> 电话号码 </template></van-step>
+        <van-step>基本信息</van-step>
+        <van-step>附加信息</van-step>
+        <van-step>确认</van-step>
+      </van-steps>
+      <div v-if="createNewStepActive == 0">step 0</div>
+      <div v-else-if="createNewStepActive == 1">step 1</div>
+      <div v-else-if="createNewStepActive == 2">step 2</div>
+      <div v-else>step 3</div>
+      <van-button type="primary" @click="gotoStep()">click</van-button>
+    </div>
+    <!-- <div style="margin-top: 5rem">
+      <van-form @submit="onSubmit">
+        <van-field
+          v-model="username"
+          name="用户名"
+          label="用户名"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+        <van-field
+          v-model="password"
+          type="password"
+          name="密码"
+          label="密码"
+          placeholder="密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+        />
+        <div style="margin: 16px">
+          <van-button round block type="info" native-type="submit"
+            >提交</van-button
+          >
+        </div>
+      </van-form> -->
+    <!-- </div> -->
+  </van-popup>
 </template>
 
 <style scoped>

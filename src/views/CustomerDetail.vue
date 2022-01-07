@@ -99,6 +99,7 @@
           </van-popup> -->
           <van-field label="所属人" v-model="belongtoWho" readonly />
           <van-field label="创建信息" v-model="channelInfo" readonly />
+          <van-field label="客源方式" v-model="firstContactMethod" readonly />
           <van-field
             v-model="noteMsg"
             rows="3"
@@ -220,6 +221,7 @@ const belongtoWho = ref(customerDetail.belongtoWho);
 const channelInfo = ref(
   `${customerDetail.createdBy}@${customerDetail.createdAt} <${customerDetail.leadsChannel}>`
 );
+const firstContactMethod = ref(customerDetail.firstContactMethod);
 
 const onSubmit = () => {};
 const addMore = ref(false);

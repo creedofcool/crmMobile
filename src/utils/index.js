@@ -10,3 +10,5 @@ export const randomDate = (start, end, startHour, endHour) => {
 export const getRandomDate = (dateFormat="yyyy-MM-DD HH:mm:ss") => {
   return moment(randomDate(new Date(2020, 0, 1), new Date(), 8, 22)).format(dateFormat);
 };
+
+export const firstContactMethods = ["400呼入", "销售电话", "在线接待", "个人QQ", "中心座机", "微信(公司)", "直接拜访", "淘宝旺旺"]
